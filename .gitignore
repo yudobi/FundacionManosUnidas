@@ -1,0 +1,34 @@
+# Entorno virtual
+venv/
+.env/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de logs y bases de datos locales
+*.log
+*.sqlite3
+
+# Archivos de configuración de IDEs
+.vscode/
+.idea/
+
+# Archivos de sistema (Windows / macOS)
+Thumbs.db
+.DS_Store
+
+# Archivos grandes o comprimidos
+*.zip
+*.tar
+*.gz
+
+# Archivos de migraciones de Django (puedes decidir si ignorarlos o no)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Archivos de backup
+*.bak
+*.swp
