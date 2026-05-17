@@ -1,0 +1,10 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useTranslation } from "react-i18next";
+import { useTestimonials } from "../hooks/queries";
+export default function TestimonialsSection() {
+    const { t } = useTranslation();
+    const { data: testimonials = [], isLoading, isError } = useTestimonials();
+    return (_jsx("section", { className: "section testimonials-section", id: "testimonios", children: _jsxs("div", { className: "container", children: [_jsxs("div", { className: "section-head", children: [_jsxs("div", { children: [_jsx("span", { className: "eyebrow red", children: t("testimonialsSection.eyebrow") }), _jsxs("h2", { style: { marginTop: 20 }, children: [t("testimonialsSection.titleLine1"), " ", _jsx("em", { children: t("testimonialsSection.titleVoces") }), _jsx("br", {}), t("testimonialsSection.titleLine2")] })] }), _jsx("p", { className: "head-lead", children: t("testimonialsSection.lead") })] }), isError && (_jsx("p", { className: "head-lead", style: { color: "var(--red)" }, children: t("testimonialsSection.loadError") })), _jsx("div", { className: "testimonial-grid", "aria-busy": isLoading, children: isLoading
+                        ? [0, 1].map((i) => (_jsxs("article", { className: "testimonial", style: { opacity: 0.55 }, children: [_jsx("span", { className: "quote-mark", children: "\u201C" }), _jsx("blockquote", { children: t("testimonialsSection.loading") })] }, i)))
+                        : testimonials.map((tt) => (_jsxs("article", { className: `testimonial ${tt.accent === "red" ? "t-red" : "t-blue"}`, children: [_jsx("span", { className: "quote-mark", children: "\u201C" }), _jsx("blockquote", { children: t(`${tt.id}.quote`, { ns: "testimonials" }) }), _jsxs("div", { className: "author", children: [_jsx("div", { className: "avatar", children: tt.initials }), _jsxs("div", { className: "author-meta", children: [_jsx("strong", { children: t(`${tt.id}.name`, { ns: "testimonials" }) }), _jsx("small", { children: t(`${tt.id}.role`, { ns: "testimonials" }) })] })] })] }, tt.id))) })] }) }));
+}

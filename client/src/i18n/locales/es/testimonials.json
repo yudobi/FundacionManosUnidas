@@ -1,0 +1,22 @@
+{
+  "ofelia": {
+    "quote": "Tres años esperamos un techo que aguantara la lluvia. Vinieron, midieron, regresaron con material y se quedaron hasta terminar. No nos dieron limosna — nos dieron una casa.",
+    "name": "Ofelia Tlaltzin",
+    "role": "Beneficiaria · Atlixco"
+  },
+  "javier": {
+    "quote": "Empecé cargando costales un sábado. Hoy coordino la ruta de despensas de Tehuacán. La fundación no te recluta — te invita a regresar.",
+    "name": "Javier Olmedo",
+    "role": "Voluntario · 4 años"
+  },
+  "carmen": {
+    "quote": "Doy desde 2019. Cada mes recibo el reporte de cómo se gastó mi aportación, con fotos y factura. Es la única organización a la que le pregunto menos y a la que más doy.",
+    "name": "Ing. Carmen Espinosa",
+    "role": "Donante mensual"
+  },
+  "mario": {
+    "quote": "Vinieron sin cámaras, sin discursos. Pidieron permiso, escucharon a mi madre y trabajaron seis sábados seguidos. Cuando se fueron, dejaron una llave y un certificado de obra.",
+    "name": "Mario Hernández",
+    "role": "Beneficiario · Cholula"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "techo-hernandez": {
+    "statusLabel": "En curso",
+    "location": "San Andrés Cholula",
+    "title": "Techo digno para la familia Hernández",
+    "summary": "Reconstrucción del techo de lámina por uno permanente de losa para la familia Hernández-Tlaltzin.",
+    "photoLabel": "Familia Hernández — fachada actual"
+  },
+  "bancos-alimentos-tehuacan": {
+    "statusLabel": "Emergencia",
+    "location": "Tehuacán",
+    "title": "Bancos de alimentos · invierno 2026",
+    "summary": "Distribución semanal de 280 despensas a familias en la sierra negra durante la temporada fría.",
+    "photoLabel": "Despensas listas para entrega"
+  },
+  "aula-tlaxcalancingo": {
+    "statusLabel": "En curso",
+    "location": "Tlaxcalancingo",
+    "title": "Aula comunitaria Tlaxcalancingo",
+    "summary": "Construcción de un aula y sanitarios para el programa de regularización que atiende a 42 niños.",
+    "photoLabel": "Sitio de obra · cimentación lista"
+  },
+  "comedor-atlixco": {
+    "statusLabel": "Realizado · 2024",
+    "location": "Atlixco",
+    "title": "Comedor comunitario Atlixco",
+    "summary": "Habilitación de un comedor que atiende 60 raciones diarias a adultos mayores en situación de calle.",
+    "photoLabel": "Apertura del comedor · nov 2024"
+  },
+  "pozo-tepetzingo": {
+    "statusLabel": "Realizado · 2024",
+    "location": "Tepetzingo",
+    "title": "Pozo de agua · San Pablo Tepetzingo",
+    "summary": "Perforación y entubado de un pozo de 32 m que da servicio a 18 familias antes sin agua potable.",
+    "photoLabel": "Inauguración pozo · mayo 2024"
+  },
+  "brigada-sierra-negra": {
+    "statusLabel": "Realizado · 2023",
+    "location": "Sierra Negra",
+    "title": "Brigada médica Sierra Negra",
+    "summary": "Jornada médica de 3 días con 9 especialidades. 412 consultas atendidas, 180 medicamentos entregados.",
+    "photoLabel": "Brigada · día 2 · consulta pediátrica"
+  }
+}

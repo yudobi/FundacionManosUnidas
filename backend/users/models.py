@@ -155,6 +155,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.level = new_level
         self.save(update_fields=['points', 'level'])
 
+    @property
+    def is_admin_role(self):
+        return self.role == self.Role.ADMIN or self.is_superuser
+
 class UserHistory(models.Model):
     """Registro histórico de cambios importantes en el usuario"""
     

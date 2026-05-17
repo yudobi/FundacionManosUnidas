@@ -33,3 +33,15 @@ Thumbs.db
 *.bak
 *.swp
 *.zip
+
+# Frontend (Vite + React en client/)
+client/node_modules/
+client/dist/
+client/.vite/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Variables de entorno locales (mantener backend/.env vacío como referencia, ignorar sobrescrituras)
+backend/.env.local
+.claude/

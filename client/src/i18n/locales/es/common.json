@@ -1,0 +1,305 @@
+{
+  "nav": {
+    "inicio": "Inicio",
+    "nosotros": "Nosotros",
+    "proyectos": "Proyectos",
+    "testimonios": "Testimonios",
+    "registro": "Regístrate",
+    "contacto": "Contacto"
+  },
+  "header": {
+    "skipToContent": "Saltar al contenido",
+    "donateNow": "Donar ahora →",
+    "signIn": "Iniciar sesión",
+    "langGroup": "Idioma",
+    "brandSubtitle": "P.E.A.C · ASOCIACIÓN CIVIL"
+  },
+  "hero": {
+    "eyebrow": "Fundación Manos Unidas P.E.A.C · desde 2014",
+    "titleLine1": "Abre tus",
+    "titleManos": "manos",
+    "titlePara": "para",
+    "titleDar": "dar",
+    "titleEnd": "y recibir.",
+    "lead": "Una red ciudadana en el centro de México que une voluntarios, familias y donantes para transformar comunidades vulnerables — un proyecto, una casa, una historia a la vez.",
+    "ctaDonate": "Donar ahora",
+    "ctaProjects": "Conoce nuestros proyectos →",
+    "metaPill": "En vivo · Proyecto Hernández 75 % financiado",
+    "metaAudit": "Auditado 2014–2025",
+    "visualAria": "Imágenes de la fundación",
+    "photo1Alt": "Brigada médica en Sierra Negra",
+    "photo1Label": "Brigada médica · Sierra Negra",
+    "photo2Alt": "Entrega de despensas en Tehuacán",
+    "photo2Label": "Entrega de despensas · Tehuacán",
+    "photo3Alt": "Familia Hernández",
+    "photo3Label": "Familia Hernández"
+  },
+  "about": {
+    "eyebrow": "Quiénes somos",
+    "titleLine1": "Manos que",
+    "titleSostienen": "sostienen",
+    "titleLine2": "manos que",
+    "titleReciben": "reciben",
+    "lead": "Somos una asociación civil mexicana fundada por vecinos que decidieron no esperar. Operamos desde Puebla, y desde 2014 hemos canalizado donaciones y voluntariado hacia las comunidades más vulnerables del centro del país.",
+    "mission": "Misión",
+    "missionBody": "Construir puentes entre quienes tienen y quienes necesitan, con transparencia radical y dignidad como principio.",
+    "vision": "Visión",
+    "visionBody": "Una sociedad donde dar y recibir sea un acto cotidiano, sin estigma y sin intermediarios opacos.",
+    "values": "Valores",
+    "valuesList": [
+      "Transparencia",
+      "Dignidad",
+      "Cercanía",
+      "Acción",
+      "Comunidad"
+    ]
+  },
+  "results": {
+    "eyebrow": "Nuestros resultados · impacto verificado",
+    "title": "Doce años construyendo confianza, peso por peso, casa por casa.",
+    "stat1Label": "familias acompañadas en el centro de México",
+    "stat2Label": "proyectos completados y entregados",
+    "stat3Unit": "activos",
+    "stat3Label": "voluntarios en brigadas, logística y obra",
+    "stat4Unit": "M MXN",
+    "stat4Label": "recaudados y aplicados con auditoría externa",
+    "footnoteDate": "Datos al 01 · 05 · 2026",
+    "footnoteLink": "Ver libro abierto de movimientos →"
+  },
+  "projectsSection": {
+    "eyebrow": "Proyectos · galería de impacto",
+    "titleLine1": "Lo que estamos",
+    "titleConstruyendo": "construyendo",
+    "titleLine2": "lo que ya",
+    "titleConstruimos": "construimos",
+    "lead": "Cada proyecto es una historia con nombre, dirección y comprobante de obra. Filtra por estado y abre el detalle para ver la galería antes/después.",
+    "filters": {
+      "todos": "Todos",
+      "en-curso": "En curso",
+      "realizado": "Realizados",
+      "emergencia": "Emergencia"
+    },
+    "loading": "Cargando…",
+    "loadError": "No pudimos cargar los proyectos. Recarga la página.",
+    "card": {
+      "goal": "Meta",
+      "applied": "Aplicado",
+      "delivered": "% entregado"
+    },
+    "beforeAfter": {
+      "eyebrow": "Galería antes / después",
+      "title": "Comedor comunitario, Atlixco — julio a noviembre 2024",
+      "dragHint": "Arrastra para comparar"
+    }
+  },
+  "beforeAfter": {
+    "ariaLabel": "Comparar imagen antes y después",
+    "valueText": "{{value}} % de transición entre antes y después",
+    "beforeTag": "Antes · 07 · jul · 2024",
+    "beforeLabel": "Local sin techo · piso de tierra",
+    "afterTag": "Después · 22 · nov · 2024",
+    "afterLabel": "60 raciones diarias · cocina entregada",
+    "before": "Antes",
+    "after": "Después"
+  },
+  "testimonialsSection": {
+    "eyebrow": "Testimonios · voces de la comunidad",
+    "titleLine1": "Las",
+    "titleVoces": "voces",
+    "titleLine2": "que nos importan.",
+    "lead": "Familias acompañadas, voluntarios y donantes — sin filtros. Lo que escuchamos en la calle, en la obra, en la cocina comunitaria.",
+    "loading": "Cargando testimonio…",
+    "loadError": "No pudimos cargar los testimonios."
+  },
+  "donate": {
+    "eyebrow": "Donar · capital o contribución",
+    "titleLine1": "Tu aportación tiene",
+    "titleLine2": "un",
+    "titleDestino": "destino",
+    "titleLine3": "claro.",
+    "lead": "Elige un monto, un proyecto y una frecuencia. Recibirás recibo deducible de impuestos en menos de 24 horas y verás cómo se aplica tu donación en nuestro libro abierto.",
+    "step1": "01 · Monto en MXN",
+    "step2": "02 · Frecuencia",
+    "step3": "03 · Destino",
+    "step4": "04 · Datos del donante",
+    "step5": "05 · Información de pago",
+    "freq": {
+      "Una vez": "Una vez",
+      "Mensual": "Mensual",
+      "Anual": "Anual"
+    },
+    "destinos": {
+      "general": "Donde más se necesite (fondo general)",
+      "techoHernandez": "Techo Hernández · Cholula",
+      "bancosTehuacan": "Bancos de alimentos · Tehuacán",
+      "aulaTlaxcalancingo": "Aula Tlaxcalancingo"
+    },
+    "amountOther": "otro monto",
+    "donorName": "Nombre",
+    "donorLastName": "Apellido",
+    "donorNamePh": "Tu nombre",
+    "donorLastNamePh": "Tu apellido",
+    "donorEmail": "Correo electrónico",
+    "donorEmailPh": "tucorreo@dominio.mx",
+    "donorRfc": "RFC (opcional · para recibo)",
+    "donorPhone": "Teléfono",
+    "donorPhonePh": "+52 ...",
+    "cardNumber": "Número de tarjeta",
+    "cardHolder": "Titular",
+    "cardHolderPh": "Nombre como aparece",
+    "cardExpires": "Vence",
+    "cardCvc": "CVC",
+    "submit": "Completar donación de {{amount}} →",
+    "submitting": "Procesando…",
+    "success": "✓ Maqueta · donación registrada ({{id}})",
+    "error": "No pudimos procesar la donación. Intenta de nuevo.",
+    "summary": "Resumen de tu donación",
+    "summaryProject": "Proyecto",
+    "summaryFreq": "Frecuencia",
+    "summaryReceipt": "Recibo deducible",
+    "summaryReceiptValue": "Sí · 24 h",
+    "summaryTotal": "Total",
+    "lockNote": "Pago seguro procesado por <strong>Stripe</strong>. Encriptación TLS · sin guardar datos de tarjeta en nuestros servidores.",
+    "bankTitle": "Donar por transferencia / depósito",
+    "bankSubtitle": "¿Prefieres SPEI o ventanilla? Estos son nuestros datos bancarios.",
+    "bankFields": {
+      "bank": "Banco",
+      "beneficiary": "Beneficiario",
+      "account": "Cuenta",
+      "clabe": "CLABE SPEI",
+      "rfc": "RFC",
+      "email": "Comprobante a"
+    }
+  },
+  "register": {
+    "eyebrow": "Únete",
+    "titleStart": "Regístrate en nuestra página y",
+    "titleEm": "forma parte",
+    "titleEnd": "de nuestra organización.",
+    "lead": "Crea tu cuenta para participar en convocatorias, dar seguimiento a tus donaciones y recibir reportes mensuales de impacto.",
+    "roles": {
+      "donante": {
+        "title": "Donante",
+        "desc": "Aporta capital, recibe recibos deducibles y reportes mensuales de aplicación."
+      },
+      "voluntario": {
+        "title": "Voluntario",
+        "desc": "Únete a brigadas, jornadas de obra, logística y reparto en campo."
+      },
+      "familia": {
+        "title": "Familia beneficiaria",
+        "desc": "Postula tu caso para evaluación y acompañamiento del equipo."
+      },
+      "aliado": {
+        "title": "Aliado institucional",
+        "desc": "Empresas, universidades y otras AC que quieran sumar."
+      }
+    },
+    "form": {
+      "title": "Crear cuenta",
+      "name": "Nombre",
+      "namePh": "Tu nombre",
+      "lastName": "Apellido",
+      "lastNamePh": "Tu apellido",
+      "email": "Correo electrónico",
+      "emailPh": "tucorreo@dominio.mx",
+      "state": "Estado",
+      "city": "Ciudad",
+      "cityPh": "Tu ciudad",
+      "password": "Contraseña",
+      "passwordPh": "Mínimo 8 caracteres",
+      "passwordConfirm": "Confirmar contraseña",
+      "passwordConfirmPh": "Repítela",
+      "termsBefore": "Acepto el",
+      "termsPrivacy": "aviso de privacidad",
+      "termsAnd": "y los",
+      "termsTerms": "términos",
+      "termsAfter": ". Quiero recibir el reporte mensual de impacto.",
+      "submit": "Crear mi cuenta →",
+      "submitting": "Creando…",
+      "success": "✓ Maqueta · cuenta creada ({{id}})",
+      "error": "No pudimos crear la cuenta. Intenta de nuevo.",
+      "signInQuestion": "¿Ya tienes cuenta?",
+      "signInLink": "Inicia sesión"
+    },
+    "states": {
+      "puebla": "Puebla",
+      "cdmx": "Ciudad de México",
+      "tlaxcala": "Tlaxcala",
+      "otro": "Otro"
+    }
+  },
+  "contact": {
+    "eyebrow": "Contacto · alcance",
+    "title": "Hablemos.",
+    "lead": "Una pregunta, una alianza, una invitación. Estamos para escucharte. Respondemos en menos de 48 horas hábiles.",
+    "info": {
+      "office": "Oficina central",
+      "hours": "Horario de atención",
+      "phone": "Teléfono",
+      "email": "Correo",
+      "donations": "Donaciones",
+      "socials": "Redes sociales",
+      "officeAddress": "Av. Reforma Norte 1204, Col. Centro,\n72000 Puebla, Pue. México",
+      "officeHours": "Lun – Vie · 9:00 – 18:00\nSáb · brigadas en campo"
+    },
+    "form": {
+      "title": "Escríbenos directo",
+      "name": "Nombre",
+      "namePh": "Tu nombre",
+      "email": "Correo",
+      "emailPh": "tu@correo.mx",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "messagePh": "Cuéntanos...",
+      "submit": "Enviar mensaje →",
+      "submitting": "Enviando…",
+      "success": "✓ Mensaje enviado · te respondemos en menos de 48 h",
+      "error": "No pudimos enviar el mensaje. Intenta de nuevo."
+    },
+    "subjects": {
+      "voluntario": "Quiero ser voluntario",
+      "alianza": "Alianza institucional",
+      "postular": "Postular un caso",
+      "prensa": "Prensa y comunicación",
+      "otro": "Otro"
+    }
+  },
+  "footer": {
+    "tagline": "Abre tus manos\npara dar y recibir.",
+    "explore": "Explorar",
+    "participate": "Participar",
+    "legal": "Legal",
+    "contact": "Contacto",
+    "links": {
+      "inicio": "Inicio",
+      "nosotros": "Nosotros",
+      "proyectos": "Proyectos",
+      "testimonios": "Testimonios",
+      "donar": "Donar",
+      "voluntariado": "Voluntariado",
+      "aliado": "Aliado institucional",
+      "postular": "Postular un caso",
+      "privacidad": "Aviso de privacidad",
+      "terminos": "Términos y condiciones",
+      "informe": "Informe anual 2025",
+      "estatutos": "Estatutos A.C."
+    },
+    "copyright": "© 2026 · Fundación Manos Unidas P.E.A.C, A.C. · Todos los derechos reservados.",
+    "satMark": "Donataria autorizada · SAT 700-02-00-00-2024"
+  },
+  "projectDetail": {
+    "back": "← Volver al inicio",
+    "loading": "Cargando proyecto…",
+    "loadError": "No pudimos cargar este proyecto. Intenta de nuevo.",
+    "notFoundTitle": "Proyecto no encontrado.",
+    "notFoundDesc": "El identificador <code>{{id}}</code> no coincide con ningún proyecto activo o realizado.",
+    "viewAll": "Ver todos los proyectos",
+    "progress": "Avance",
+    "applied": "Aplicado",
+    "deliveredPct": "{{pct}} % entregado",
+    "goal": "Meta",
+    "donateCta": "Donar a este proyecto →",
+    "thumbAria": "Imagen {{index}}"
+  }
+}

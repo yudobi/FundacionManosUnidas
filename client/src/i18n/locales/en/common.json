@@ -1,0 +1,305 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "nosotros": "About",
+    "proyectos": "Projects",
+    "testimonios": "Testimonials",
+    "registro": "Sign up",
+    "contacto": "Contact"
+  },
+  "header": {
+    "skipToContent": "Skip to content",
+    "donateNow": "Donate now →",
+    "signIn": "Sign in",
+    "langGroup": "Language",
+    "brandSubtitle": "P.E.A.C · CIVIL ASSOCIATION"
+  },
+  "hero": {
+    "eyebrow": "Fundación Manos Unidas P.E.A.C · since 2014",
+    "titleLine1": "Open your",
+    "titleManos": "hands",
+    "titlePara": "to",
+    "titleDar": "give",
+    "titleEnd": "and receive.",
+    "lead": "A grassroots network in central Mexico that brings together volunteers, families, and donors to transform vulnerable communities — one project, one home, one story at a time.",
+    "ctaDonate": "Donate now",
+    "ctaProjects": "Explore our projects →",
+    "metaPill": "Live · Hernández Project 75% funded",
+    "metaAudit": "Audited 2014–2025",
+    "visualAria": "Foundation images",
+    "photo1Alt": "Medical brigade in Sierra Negra",
+    "photo1Label": "Medical brigade · Sierra Negra",
+    "photo2Alt": "Food pantry delivery in Tehuacán",
+    "photo2Label": "Food pantry delivery · Tehuacán",
+    "photo3Alt": "Hernández family",
+    "photo3Label": "Hernández family"
+  },
+  "about": {
+    "eyebrow": "Who we are",
+    "titleLine1": "Hands that",
+    "titleSostienen": "support",
+    "titleLine2": "hands that",
+    "titleReciben": "receive",
+    "lead": "We are a Mexican civil association founded by neighbors who decided not to wait. Based in Puebla, since 2014 we have channeled donations and volunteer work to the most vulnerable communities in central Mexico.",
+    "mission": "Mission",
+    "missionBody": "To build bridges between those who have and those in need, with radical transparency and dignity as our guiding principle.",
+    "vision": "Vision",
+    "visionBody": "A society where giving and receiving is an everyday act, free of stigma and opaque intermediaries.",
+    "values": "Values",
+    "valuesList": [
+      "Transparency",
+      "Dignity",
+      "Closeness",
+      "Action",
+      "Community"
+    ]
+  },
+  "results": {
+    "eyebrow": "Our results · verified impact",
+    "title": "Twelve years building trust, peso by peso, home by home.",
+    "stat1Label": "families supported across central Mexico",
+    "stat2Label": "projects completed and delivered",
+    "stat3Unit": "active",
+    "stat3Label": "volunteers in brigades, logistics, and construction",
+    "stat4Unit": "M MXN",
+    "stat4Label": "raised and applied with external audit",
+    "footnoteDate": "Data as of 05 · 01 · 2026",
+    "footnoteLink": "View open ledger of movements →"
+  },
+  "projectsSection": {
+    "eyebrow": "Projects · impact gallery",
+    "titleLine1": "What we are",
+    "titleConstruyendo": "building",
+    "titleLine2": "what we have already",
+    "titleConstruimos": "built",
+    "lead": "Every project is a story with a name, an address, and proof of work. Filter by status and open the detail view to see the before/after gallery.",
+    "filters": {
+      "todos": "All",
+      "en-curso": "In progress",
+      "realizado": "Completed",
+      "emergencia": "Emergency"
+    },
+    "loading": "Loading…",
+    "loadError": "We couldn't load the projects. Please reload the page.",
+    "card": {
+      "goal": "Goal",
+      "applied": "Applied",
+      "delivered": "% delivered"
+    },
+    "beforeAfter": {
+      "eyebrow": "Before / after gallery",
+      "title": "Community kitchen, Atlixco — July to November 2024",
+      "dragHint": "Drag to compare"
+    }
+  },
+  "beforeAfter": {
+    "ariaLabel": "Compare before and after images",
+    "valueText": "{{value}}% transition between before and after",
+    "beforeTag": "Before · Jul 07, 2024",
+    "beforeLabel": "Roofless site · dirt floor",
+    "afterTag": "After · Nov 22, 2024",
+    "afterLabel": "60 daily meals · kitchen delivered",
+    "before": "Before",
+    "after": "After"
+  },
+  "testimonialsSection": {
+    "eyebrow": "Testimonials · voices from the community",
+    "titleLine1": "The",
+    "titleVoces": "voices",
+    "titleLine2": "that matter to us.",
+    "lead": "Supported families, volunteers, and donors — unfiltered. What we hear on the street, at the worksite, in the community kitchen.",
+    "loading": "Loading testimonial…",
+    "loadError": "We couldn't load the testimonials."
+  },
+  "donate": {
+    "eyebrow": "Donate · capital or contribution",
+    "titleLine1": "Your contribution has",
+    "titleLine2": "a clear",
+    "titleDestino": "destination",
+    "titleLine3": ".",
+    "lead": "Choose an amount, a project, and a frequency. You'll receive a tax-deductible receipt in less than 24 hours and see how your donation is applied in our open ledger.",
+    "step1": "01 · Amount in MXN",
+    "step2": "02 · Frequency",
+    "step3": "03 · Destination",
+    "step4": "04 · Donor details",
+    "step5": "05 · Payment information",
+    "freq": {
+      "Una vez": "One time",
+      "Mensual": "Monthly",
+      "Anual": "Yearly"
+    },
+    "destinos": {
+      "general": "Where most needed (general fund)",
+      "techoHernandez": "Hernández Roof · Cholula",
+      "bancosTehuacan": "Food pantries · Tehuacán",
+      "aulaTlaxcalancingo": "Tlaxcalancingo Classroom"
+    },
+    "amountOther": "other amount",
+    "donorName": "First name",
+    "donorLastName": "Last name",
+    "donorNamePh": "Your first name",
+    "donorLastNamePh": "Your last name",
+    "donorEmail": "Email address",
+    "donorEmailPh": "you@domain.com",
+    "donorRfc": "RFC (optional · for receipt)",
+    "donorPhone": "Phone",
+    "donorPhonePh": "+52 ...",
+    "cardNumber": "Card number",
+    "cardHolder": "Cardholder",
+    "cardHolderPh": "Name as it appears",
+    "cardExpires": "Expires",
+    "cardCvc": "CVC",
+    "submit": "Complete donation of {{amount}} →",
+    "submitting": "Processing…",
+    "success": "✓ Mockup · donation registered ({{id}})",
+    "error": "We couldn't process the donation. Please try again.",
+    "summary": "Donation summary",
+    "summaryProject": "Project",
+    "summaryFreq": "Frequency",
+    "summaryReceipt": "Tax-deductible receipt",
+    "summaryReceiptValue": "Yes · 24 h",
+    "summaryTotal": "Total",
+    "lockNote": "Secure payment processed by <strong>Stripe</strong>. TLS encryption · no card data stored on our servers.",
+    "bankTitle": "Donate by transfer / deposit",
+    "bankSubtitle": "Prefer SPEI or in-person? Here are our bank details.",
+    "bankFields": {
+      "bank": "Bank",
+      "beneficiary": "Beneficiary",
+      "account": "Account",
+      "clabe": "CLABE SPEI",
+      "rfc": "RFC",
+      "email": "Send proof to"
+    }
+  },
+  "register": {
+    "eyebrow": "Join us",
+    "titleStart": "Sign up on our site and",
+    "titleEm": "become part",
+    "titleEnd": "of our organization.",
+    "lead": "Create your account to take part in calls for volunteers, track your donations, and receive monthly impact reports.",
+    "roles": {
+      "donante": {
+        "title": "Donor",
+        "desc": "Contribute capital, receive tax-deductible receipts and monthly application reports."
+      },
+      "voluntario": {
+        "title": "Volunteer",
+        "desc": "Join brigades, construction days, logistics, and field distribution."
+      },
+      "familia": {
+        "title": "Beneficiary family",
+        "desc": "Submit your case for evaluation and team support."
+      },
+      "aliado": {
+        "title": "Institutional partner",
+        "desc": "Companies, universities, and other NGOs that want to join in."
+      }
+    },
+    "form": {
+      "title": "Create account",
+      "name": "First name",
+      "namePh": "Your first name",
+      "lastName": "Last name",
+      "lastNamePh": "Your last name",
+      "email": "Email address",
+      "emailPh": "you@domain.com",
+      "state": "State",
+      "city": "City",
+      "cityPh": "Your city",
+      "password": "Password",
+      "passwordPh": "Minimum 8 characters",
+      "passwordConfirm": "Confirm password",
+      "passwordConfirmPh": "Re-enter it",
+      "termsBefore": "I accept the",
+      "termsPrivacy": "privacy notice",
+      "termsAnd": "and the",
+      "termsTerms": "terms",
+      "termsAfter": ". I want to receive the monthly impact report.",
+      "submit": "Create my account →",
+      "submitting": "Creating…",
+      "success": "✓ Mockup · account created ({{id}})",
+      "error": "We couldn't create the account. Please try again.",
+      "signInQuestion": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "states": {
+      "puebla": "Puebla",
+      "cdmx": "Mexico City",
+      "tlaxcala": "Tlaxcala",
+      "otro": "Other"
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact · reach out",
+    "title": "Let's talk.",
+    "lead": "A question, a partnership, an invitation. We're here to listen. We reply within 48 business hours.",
+    "info": {
+      "office": "Head office",
+      "hours": "Business hours",
+      "phone": "Phone",
+      "email": "Email",
+      "donations": "Donations",
+      "socials": "Social media",
+      "officeAddress": "Av. Reforma Norte 1204, Col. Centro,\n72000 Puebla, Pue. Mexico",
+      "officeHours": "Mon – Fri · 9:00 – 18:00\nSat · field brigades"
+    },
+    "form": {
+      "title": "Write to us directly",
+      "name": "Name",
+      "namePh": "Your name",
+      "email": "Email",
+      "emailPh": "you@email.com",
+      "subject": "Subject",
+      "message": "Message",
+      "messagePh": "Tell us...",
+      "submit": "Send message →",
+      "submitting": "Sending…",
+      "success": "✓ Message sent · we'll reply within 48 h",
+      "error": "We couldn't send the message. Please try again."
+    },
+    "subjects": {
+      "voluntario": "I want to volunteer",
+      "alianza": "Institutional partnership",
+      "postular": "Submit a case",
+      "prensa": "Press and communications",
+      "otro": "Other"
+    }
+  },
+  "footer": {
+    "tagline": "Open your hands\nto give and receive.",
+    "explore": "Explore",
+    "participate": "Get involved",
+    "legal": "Legal",
+    "contact": "Contact",
+    "links": {
+      "inicio": "Home",
+      "nosotros": "About",
+      "proyectos": "Projects",
+      "testimonios": "Testimonials",
+      "donar": "Donate",
+      "voluntariado": "Volunteer",
+      "aliado": "Institutional partner",
+      "postular": "Submit a case",
+      "privacidad": "Privacy notice",
+      "terminos": "Terms and conditions",
+      "informe": "2025 annual report",
+      "estatutos": "A.C. bylaws"
+    },
+    "copyright": "© 2026 · Fundación Manos Unidas P.E.A.C, A.C. · All rights reserved.",
+    "satMark": "Authorized donee · SAT 700-02-00-00-2024"
+  },
+  "projectDetail": {
+    "back": "← Back to home",
+    "loading": "Loading project…",
+    "loadError": "We couldn't load this project. Please try again.",
+    "notFoundTitle": "Project not found.",
+    "notFoundDesc": "The identifier <code>{{id}}</code> doesn't match any active or completed project.",
+    "viewAll": "View all projects",
+    "progress": "Progress",
+    "applied": "Applied",
+    "deliveredPct": "{{pct}}% delivered",
+    "goal": "Goal",
+    "donateCta": "Donate to this project →",
+    "thumbAria": "Image {{index}}"
+  }
+}

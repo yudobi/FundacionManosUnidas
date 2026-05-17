@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'drf_spectacular',
     'django_filters',
@@ -50,7 +51,8 @@ INSTALLED_APPS = [
     'users',
     'testimonios',
     'proyectos',
-    
+    'payments',
+    'siteinfo',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +105,11 @@ SIMPLE_JWT = {
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'
 
+# Stripe (payments app). Vacío activa modo demo en payments/views.py
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
+
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -130,11 +137,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_manos_unidas',   # nombre de tu DB
-        'USER': 'postgres',          # usuario de PostgreSQL
-        'PASSWORD': '96081520908', # contraseña del usuario
-        'HOST': 'localhost',         # porque usamos el túnel
-        'PORT': '5433',              # puerto local del túnel
+        'NAME': config('DB_NAME', default='db_manos_unidas'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='96081520908'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5433'),
     }
 }
 

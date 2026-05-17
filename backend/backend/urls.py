@@ -32,7 +32,13 @@ urlpatterns = [
 
     # API endpoints para proyectos
     path('api/proyectos/', include('proyectos.urls')),
-    
+
+    # API endpoints para donaciones (Stripe)
+    path('api/payments/', include('payments.urls')),
+
+    # API endpoints para contenido editable del sitio
+    path('api/siteinfo/', include('siteinfo.urls')),
+
     # Documentación Swagger/OpenAPI
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

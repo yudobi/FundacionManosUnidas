@@ -1,0 +1,44 @@
+{
+  "techo-hernandez": {
+    "statusLabel": "In progress",
+    "location": "San Andrés Cholula",
+    "title": "A proper roof for the Hernández family",
+    "summary": "Rebuilding a sheet-metal roof into a permanent concrete slab for the Hernández-Tlaltzin family.",
+    "photoLabel": "Hernández family — current facade"
+  },
+  "bancos-alimentos-tehuacan": {
+    "statusLabel": "Emergency",
+    "location": "Tehuacán",
+    "title": "Food pantries · winter 2026",
+    "summary": "Weekly distribution of 280 food parcels to families in the Sierra Negra throughout the cold season.",
+    "photoLabel": "Food parcels ready for delivery"
+  },
+  "aula-tlaxcalancingo": {
+    "statusLabel": "In progress",
+    "location": "Tlaxcalancingo",
+    "title": "Tlaxcalancingo community classroom",
+    "summary": "Building a classroom and restrooms for the tutoring program that serves 42 children.",
+    "photoLabel": "Construction site · foundation ready"
+  },
+  "comedor-atlixco": {
+    "statusLabel": "Completed · 2024",
+    "location": "Atlixco",
+    "title": "Atlixco community kitchen",
+    "summary": "A kitchen serving 60 daily meals to homeless seniors.",
+    "photoLabel": "Kitchen opening · Nov 2024"
+  },
+  "pozo-tepetzingo": {
+    "statusLabel": "Completed · 2024",
+    "location": "Tepetzingo",
+    "title": "Water well · San Pablo Tepetzingo",
+    "summary": "Drilling and piping a 32-meter well that serves 18 families previously without drinking water.",
+    "photoLabel": "Well inauguration · May 2024"
+  },
+  "brigada-sierra-negra": {
+    "statusLabel": "Completed · 2023",
+    "location": "Sierra Negra",
+    "title": "Sierra Negra medical brigade",
+    "summary": "3-day medical mission with 9 specialties. 412 consultations completed, 180 prescriptions delivered.",
+    "photoLabel": "Brigade · day 2 · pediatric consultation"
+  }
+}
