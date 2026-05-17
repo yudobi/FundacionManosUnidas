@@ -35,7 +35,9 @@ interface BackendTestimonio {
   author_photo?: string | null;
   author_photo_url?: string | null;
   title?: string;
-  content: string;
+  /** Solo presente en el endpoint detail (`/{id}/`). En list devuelve `content_preview`. */
+  content?: string;
+  content_preview?: string;
   status: string;
   featured_order?: number;
   created_at?: string;
@@ -82,7 +84,7 @@ function toAdmin(t: BackendTestimonio): AdminTestimonial {
   return {
     id: t.id,
     slug: String(t.id),
-    quote: t.content,
+    quote: t.content ?? t.content_preview ?? "",
     name: t.author_name,
     initials: initialsFromName(t.author_name),
     role: type,
@@ -106,23 +108,35 @@ export async function listAdminTestimonials(
   return unwrapList(data).map(toAdmin);
 }
 
-export async function approveTestimonial(id: number): Promise<AdminTestimonial> {
+/**
+ * El endpoint /moderate/ devuelve solo `{message, status}`. Re-fetchamos
+ * el testimonio completo para refrescar el cache del admin con el shape
+ * que el UI espera.
+ */
+async function refetchTestimonial(id: number): Promise<AdminTestimonial> {
   const t = await apiFetch<BackendTestimonio>(
-    `/api/testimonios/testimonios/${id}/moderate/`,
-    { method: "POST", body: { action: "approve" } },
+    `/api/testimonios/testimonios/${id}/`,
   );
   return toAdmin(t);
 }
 
+export async function approveTestimonial(id: number): Promise<AdminTestimonial> {
+  await apiFetch(`/api/testimonios/testimonios/${id}/moderate/`, {
+    method: "POST",
+    body: { action: "approve" },
+  });
+  return refetchTestimonial(id);
+}
+
 export async function rejectTestimonial(
   id: number,
-  reason = "",
+  reason = "Rechazado por moderador",
 ): Promise<AdminTestimonial> {
-  const t = await apiFetch<BackendTestimonio>(
-    `/api/testimonios/testimonios/${id}/moderate/`,
-    { method: "POST", body: { action: "reject", rejection_reason: reason } },
-  );
-  return toAdmin(t);
+  await apiFetch(`/api/testimonios/testimonios/${id}/moderate/`, {
+    method: "POST",
+    body: { action: "reject", rejection_reason: reason },
+  });
+  return refetchTestimonial(id);
 }
 
 export async function deleteTestimonial(id: number): Promise<void> {

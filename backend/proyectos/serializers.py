@@ -57,8 +57,9 @@ class ProyectoRealizadoListSerializer(serializers.ModelSerializer):
         model = ProyectoRealizado
         fields = [
             'id', 'title', 'slug', 'description_short', 'start_date', 'end_date',
-            'location', 'impacto_nivel', 'beneficiarios', 'cover_image_url',
-            'categoria_nombre', 'views', 'likes'
+            'location', 'impacto_nivel', 'beneficiarios', 'voluntarios',
+            'inversion_total', 'cover_image_url', 'categoria_nombre',
+            'views', 'likes',
         ]
     
     def get_cover_image_url(self, obj):

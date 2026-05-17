@@ -18,9 +18,15 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'email', 'username', 'first_name', 'last_name', 'full_name',
             'phone', 'birth_date', 'avatar', 'country', 'city', 'address',
             'role', 'points', 'level', 'date_joined', 'receive_newsletter',
-            'receive_notifications', 'email_verified', 'phone_verified', 'password'
+            'receive_notifications', 'email_verified', 'phone_verified',
+            'is_active', 'is_staff', 'is_superuser',
+            'is_volunteer', 'is_donor', 'is_beneficiary', 'is_partner',
+            'password',
         ]
-        read_only_fields = ['id', 'points', 'level', 'date_joined', 'email_verified', 'phone_verified']
+        read_only_fields = [
+            'id', 'points', 'level', 'date_joined', 'email_verified',
+            'phone_verified', 'is_staff', 'is_superuser',
+        ]
         extra_kwargs = {
             'password': {'write_only': True, 'required': False}
         }

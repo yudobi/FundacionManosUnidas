@@ -64,11 +64,13 @@ class CategoriaProyectoViewSet(viewsets.ModelViewSet):
 )
 class ProyectoRealizadoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    lookup_field = 'slug'
+    lookup_value_regex = r'[-\w]+'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['categoria', 'impacto_nivel', 'is_published']
     search_fields = ['title', 'description', 'location']
     ordering_fields = ['end_date', 'start_date', 'views', 'likes', 'beneficiarios']
-    
+
     def get_queryset(self):
         if self.request.user.is_staff:
             return ProyectoRealizado.objects.all()
@@ -145,11 +147,13 @@ class ImagenAntesDespuesViewSet(viewsets.ModelViewSet):
 )
 class ProyectoEnProgresoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    lookup_field = 'slug'
+    lookup_value_regex = r'[-\w]+'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['categoria', 'estado', 'urgencia', 'is_published']
     search_fields = ['title', 'description', 'location', 'necesidades']
     ordering_fields = ['start_date', 'avance_porcentaje', 'urgencia', 'views', 'likes']
-    
+
     def get_queryset(self):
         if self.request.user.is_staff:
             return ProyectoEnProgreso.objects.all()
