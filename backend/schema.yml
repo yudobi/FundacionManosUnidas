@@ -1,0 +1,563 @@
+openapi: 3.0.3
+info:
+  title: API de Fundación Mano Unida
+  version: 1.0.0
+  description: API para la gestión de donaciones, proyectos y usuarios de la fundación
+paths:
+  /api/users/change-password/:
+    post:
+      operationId: users_change_password_create
+      description: Permite al usuario autenticado cambiar su contraseña
+      summary: Cambiar contraseña
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Contraseña actualizada
+        '400':
+          description: Error de validación
+  /api/users/history/:
+    get:
+      operationId: users_history_list
+      description: Obtiene el historial de acciones del usuario autenticado
+      summary: Historial de usuario
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - profile
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserHistoryList'
+          description: ''
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      description: Autentica un usuario y devuelve tokens JWT junto con los datos
+        del usuario
+      summary: Iniciar sesión
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: usuario@ejemplo.com
+                password:
+                  type: string
+                  format: password
+                  example: MiPassword123!
+              required:
+              - email
+              - password
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refresh:
+                    type: string
+                  access:
+                    type: string
+                  user:
+                    type: object
+          description: Login exitoso
+        '401':
+          description: Credenciales inválidas
+  /api/users/logout/:
+    post:
+      operationId: users_logout_create
+      description: Invalida el refresh token para cerrar la sesión
+      summary: Cerrar sesión
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh:
+                  type: string
+                  description: Refresh token
+              required:
+              - refresh
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Sesión cerrada
+        '400':
+          description: Token inválido
+  /api/users/profile/:
+    get:
+      operationId: users_profile_retrieve
+      description: Retorna el perfil completo del usuario autenticado
+      summary: Obtener perfil
+      tags:
+      - profile
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          description: No autenticado
+    put:
+      operationId: users_profile_update
+      description: Retorna el perfil completo del usuario autenticado
+      summary: Obtener perfil
+      tags:
+      - profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          description: No autenticado
+    patch:
+      operationId: users_profile_partial_update
+      description: Retorna el perfil completo del usuario autenticado
+      summary: Obtener perfil
+      tags:
+      - profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfileUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfileUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfileUpdateRequest'
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          description: No autenticado
+  /api/users/register/:
+    post:
+      operationId: users_register_create
+      description: Crea una nueva cuenta de usuario en la plataforma
+      summary: Registro de usuario
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Usuario registrado exitosamente
+        '400':
+          description: Datos inválidos
+  /api/users/stats/:
+    get:
+      operationId: users_stats_retrieve
+      description: Obtiene métricas y estadísticas del usuario (puntos, nivel, etc.)
+      summary: Estadísticas del usuario
+      tags:
+      - profile
+      security:
+      - jwtAuth: []
+      - BearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_points:
+                    type: integer
+                    example: 1500
+                  level:
+                    type: integer
+                    example: 2
+                  points_to_next_level:
+                    type: integer
+                    example: 500
+                  member_since:
+                    type: string
+                    format: date-time
+                  role:
+                    type: string
+                    example: DONANTE
+                  email_verified:
+                    type: boolean
+                  history_count:
+                    type: integer
+                    example: 5
+          description: ''
+components:
+  schemas:
+    ActionEnum:
+      enum:
+      - CREATE
+      - UPDATE
+      - ROLE_CHANGE
+      - VERIFY_EMAIL
+      - POINTS_EARNED
+      type: string
+      description: |-
+        * `CREATE` - Creación
+        * `UPDATE` - Actualización
+        * `ROLE_CHANGE` - Cambio de rol
+        * `VERIFY_EMAIL` - Verificación email
+        * `POINTS_EARNED` - Ganancia de puntos
+    ChangePasswordRequest:
+      type: object
+      description: Serializer para cambio de contraseña
+      properties:
+        old_password:
+          type: string
+          minLength: 1
+        new_password:
+          type: string
+          minLength: 1
+      required:
+      - new_password
+      - old_password
+    PaginatedUserHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserHistory'
+    PatchedUserProfileUpdateRequest:
+      type: object
+      description: Serializer para actualización de perfil sin password
+      properties:
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        avatar:
+          type: string
+          format: binary
+          nullable: true
+        country:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        address:
+          type: string
+        receive_newsletter:
+          type: boolean
+        receive_notifications:
+          type: boolean
+    RegisterRequest:
+      type: object
+      description: Serializer específico para registro con validaciones extra
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+          title: Correo electrónico
+          maxLength: 254
+        username:
+          type: string
+          minLength: 3
+          pattern: ^[\w.@+-]+$
+          maxLength: 50
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        password2:
+          type: string
+          writeOnly: true
+          minLength: 1
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+      required:
+      - email
+      - password
+      - password2
+      - username
+    RoleEnum:
+      enum:
+      - DONANTE
+      - VOLUNTARIO
+      - BENEFICIARIO
+      - ALIADO
+      - ADMIN
+      type: string
+      description: |-
+        * `DONANTE` - Donante
+        * `VOLUNTARIO` - Voluntario
+        * `BENEFICIARIO` - Beneficiario
+        * `ALIADO` - Aliado Estratégico
+        * `ADMIN` - Administrador
+    User:
+      type: object
+      description: Serializer principal de usuario con campos controlados
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Correo electrónico
+          maxLength: 254
+        username:
+          type: string
+          pattern: ^[\w.@+-]+$
+          maxLength: 50
+          minLength: 3
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        full_name:
+          type: string
+          readOnly: true
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        country:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        address:
+          type: string
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        points:
+          type: integer
+          readOnly: true
+          description: Puntos de fidelidad
+        level:
+          type: integer
+          readOnly: true
+          description: Nivel del usuario
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        receive_newsletter:
+          type: boolean
+        receive_notifications:
+          type: boolean
+        email_verified:
+          type: boolean
+          readOnly: true
+        phone_verified:
+          type: boolean
+          readOnly: true
+      required:
+      - date_joined
+      - email
+      - email_verified
+      - full_name
+      - id
+      - level
+      - phone_verified
+      - points
+      - username
+    UserHistory:
+      type: object
+      description: Serializer para el historial de usuarios
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        action:
+          allOf:
+          - $ref: '#/components/schemas/ActionEnum'
+          readOnly: true
+        description:
+          type: string
+          readOnly: true
+        ip_address:
+          type: string
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - action
+      - created_at
+      - description
+      - id
+      - ip_address
+    UserProfileUpdateRequest:
+      type: object
+      description: Serializer para actualización de perfil sin password
+      properties:
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        phone:
+          type: string
+          nullable: true
+          maxLength: 15
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        avatar:
+          type: string
+          format: binary
+          nullable: true
+        country:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        address:
+          type: string
+        receive_newsletter:
+          type: boolean
+        receive_notifications:
+          type: boolean
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: users
+  description: Gestión de usuarios y autenticación
+- name: auth
+  description: Autenticación y tokens
+- name: profile
+  description: Perfil de usuario
