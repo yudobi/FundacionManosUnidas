@@ -26,6 +26,12 @@ urlpatterns = [
     
     # API endpoints
     path('api/users/', include('users.urls')),
+
+    # API endpoints para testimonios
+    path('api/testimonios/', include('testimonios.urls')),  
+
+    # API endpoints para proyectos
+    path('api/proyectos/', include('proyectos.urls')),
     
     # Documentación Swagger/OpenAPI
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
