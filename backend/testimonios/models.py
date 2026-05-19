@@ -33,6 +33,8 @@ class Testimonio(models.Model):
         help_text="Nombre de la persona que da el testimonio"
     )
     author_email = models.EmailField(
+        blank=True,
+        null=True,
         verbose_name="Email del autor",
         help_text="Para contacto interno, no se muestra públicamente"
     )

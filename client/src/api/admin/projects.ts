@@ -1,22 +1,14 @@
 /**
  * Cliente admin de proyectos.
  *
- * Tras el merge con la app `proyectos` del otro programador, el backend expone
- * DOS modelos distintos (`ProyectoRealizado` y `ProyectoEnProgreso`) con muchos
- * más campos que el modelo `Project` original. Para no romper el UI admin
- * existente, esta capa:
- *
- *  - Expone un tipo `AdminProject` con los campos comunes que el UI ya usa.
- *  - Recibe/escribe en los nuevos endpoints `/api/proyectos/en-progreso/` y
- *    `/api/proyectos/realizados/` mapeando ida y vuelta.
- *  - Usa el campo `slug` como identificador estable (ambos modelos lo tienen).
- *  - Ignora silenciosamente los campos que el backend no soporta (tag, tint,
- *    summary, status_label, photo_label) — son metadatos locales que el UI
- *    seguirá manteniendo en memoria pero no se persisten.
- *
- * NOTA: Las nuevas capacidades (categorías, imágenes antes/después,
- * necesidades, actualizaciones) NO están expuestas aquí. Se recomienda
- * construir nuevas pantallas admin específicas para esos recursos.
+ * El backend expone DOS modelos (`ProyectoRealizado` y `ProyectoEnProgreso`)
+ * con campos obligatorios (cover_image, start_date, end_date/necesidades).
+ * Esta capa:
+ *  - Expone `AdminProject` con los campos que el UI admin usa.
+ *  - Envía `FormData` (multipart) cuando hay archivo de portada; JSON si no.
+ *  - Usa `slug` como identificador estable.
+ *  - Gestiona la galería vía las rutas anidadas por slug
+ *    `/api/proyectos/{kind}/{slug}/galeria/`.
  */
 import { apiFetch } from "../client";
 
@@ -68,6 +60,22 @@ export interface AdminProjectInput {
   status_label?: string;
   photo_label?: string;
   sort_order?: number;
+  /** Requeridos por el backend nuevo. */
+  start_date?: string;
+  end_date?: string;
+  /** Solo proyectos en progreso. */
+  necesidades?: string;
+  /** Archivo de portada (obligatorio al crear). */
+  cover_image?: File | null;
+}
+
+interface BackendGaleria {
+  id: number;
+  image?: string | null;
+  image_url?: string | null;
+  title?: string;
+  description?: string;
+  order?: number;
 }
 
 interface BackendEnProgreso {
@@ -82,9 +90,11 @@ interface BackendEnProgreso {
   porcentaje_recaudado?: number;
   start_date?: string | null;
   estimated_end_date?: string | null;
+  necesidades?: string;
   location?: string;
   cover_image?: string | null;
-  galeria?: AdminProjectImage[];
+  cover_image_url?: string | null;
+  galeria?: BackendGaleria[];
   created_at?: string;
   updated_at?: string;
 }
@@ -100,7 +110,8 @@ interface BackendRealizado {
   location?: string;
   impacto_nivel?: string;
   cover_image?: string | null;
-  galeria?: AdminProjectImage[];
+  cover_image_url?: string | null;
+  galeria?: BackendGaleria[];
   created_at?: string;
   updated_at?: string;
 }
@@ -113,16 +124,50 @@ function unwrapList<T>(data: T[] | PaginatedResponse<T>): T[] {
   return Array.isArray(data) ? data : data.results;
 }
 
+/** Segmento de URL del backend para cada tipo de proyecto. */
+function kindPath(kind: AdminProjectKind): string {
+  return kind === "realizado" ? "realizados" : "en-progreso";
+}
+
 function toNumber(v: string | number | undefined | null, fb = 0): number {
   if (v === undefined || v === null) return fb;
   const n = typeof v === "string" ? parseFloat(v) : v;
   return Number.isFinite(n) ? Math.round(n) : fb;
 }
 
+function toAdminImage(
+  g: BackendGaleria,
+  coverUrl: string | null,
+): AdminProjectImage {
+  const url = g.image_url ?? g.image ?? "";
+  return {
+    id: g.id,
+    image: url,
+    sort_order: g.order ?? 0,
+    is_cover: Boolean(coverUrl) && url === coverUrl,
+    alt: g.title ?? "",
+  };
+}
+
+function buildBody(obj: Record<string, unknown>): Record<string, unknown> | FormData {
+  const hasFile = Object.values(obj).some(
+    (v) => typeof File !== "undefined" && v instanceof File,
+  );
+  if (!hasFile) return obj;
+  const fd = new FormData();
+  for (const [k, v] of Object.entries(obj)) {
+    if (v === undefined || v === null) continue;
+    if (v instanceof File) fd.append(k, v);
+    else fd.append(k, String(v));
+  }
+  return fd;
+}
+
 function enProgresoToAdmin(p: BackendEnProgreso): AdminProject {
   const urgencia = (p.urgencia ?? "").toUpperCase();
   const status: AdminProject["status"] =
     urgencia === "CRITICA" || urgencia === "ALTA" ? "emergencia" : "en-curso";
+  const cover = p.cover_image_url ?? p.cover_image ?? null;
   return {
     slug: p.slug,
     kind: "en-progreso",
@@ -139,8 +184,8 @@ function enProgresoToAdmin(p: BackendEnProgreso): AdminProject {
     status_label: status,
     photo_label: "",
     sort_order: 0,
-    images: p.galeria ?? [],
-    cover_image: p.cover_image ?? null,
+    images: (p.galeria ?? []).map((g) => toAdminImage(g, cover)),
+    cover_image: cover,
     created_at: p.created_at ?? "",
     updated_at: p.updated_at ?? "",
   };
@@ -148,6 +193,7 @@ function enProgresoToAdmin(p: BackendEnProgreso): AdminProject {
 
 function realizadoToAdmin(p: BackendRealizado): AdminProject {
   const goal = toNumber(p.inversion_total);
+  const cover = p.cover_image_url ?? p.cover_image ?? null;
   return {
     slug: p.slug,
     kind: "realizado",
@@ -164,8 +210,8 @@ function realizadoToAdmin(p: BackendRealizado): AdminProject {
     status_label: "realizado",
     photo_label: "",
     sort_order: 0,
-    images: p.galeria ?? [],
-    cover_image: p.cover_image ?? null,
+    images: (p.galeria ?? []).map((g) => toAdminImage(g, cover)),
+    cover_image: cover,
     created_at: p.created_at ?? "",
     updated_at: p.updated_at ?? "",
   };
@@ -181,8 +227,12 @@ function adminInputToEnProgreso(
   if (data.location !== undefined) body.location = data.location;
   if (data.goal !== undefined) body.meta_donacion = data.goal;
   if (data.raised !== undefined) body.recaudado = data.raised;
-  if (data.year) body.start_date = `${data.year}-01-01`;
+  if (data.necesidades) body.necesidades = data.necesidades;
+  if (data.start_date) body.start_date = data.start_date;
+  else if (data.year) body.start_date = `${data.year}-01-01`;
+  if (data.end_date) body.estimated_end_date = data.end_date;
   if (data.status === "emergencia") body.urgencia = "ALTA";
+  if (data.cover_image instanceof File) body.cover_image = data.cover_image;
   return body;
 }
 
@@ -195,7 +245,11 @@ function adminInputToRealizado(
   if (data.summary !== undefined) body.description = data.summary;
   if (data.location !== undefined) body.location = data.location;
   if (data.goal !== undefined) body.inversion_total = data.goal;
-  if (data.year) body.end_date = `${data.year}-12-31`;
+  if (data.start_date) body.start_date = data.start_date;
+  else if (data.year) body.start_date = `${data.year}-01-01`;
+  if (data.end_date) body.end_date = data.end_date;
+  else if (data.year) body.end_date = `${data.year}-12-31`;
+  if (data.cover_image instanceof File) body.cover_image = data.cover_image;
   return body;
 }
 
@@ -234,13 +288,13 @@ export async function createProject(
   if (data.status === "realizado") {
     const p = await apiFetch<BackendRealizado>("/api/proyectos/realizados/", {
       method: "POST",
-      body: adminInputToRealizado(data),
+      body: buildBody(adminInputToRealizado(data)),
     });
     return realizadoToAdmin(p);
   }
   const p = await apiFetch<BackendEnProgreso>("/api/proyectos/en-progreso/", {
     method: "POST",
-    body: adminInputToEnProgreso(data),
+    body: buildBody(adminInputToEnProgreso(data)),
   });
   return enProgresoToAdmin(p);
 }
@@ -249,18 +303,17 @@ export async function updateProject(
   slug: string,
   data: Partial<AdminProjectInput>,
 ): Promise<AdminProject> {
-  // Decidir el kind por el status si viene, si no consultar.
   if (data.status === "realizado") {
     const p = await apiFetch<BackendRealizado>(
       `/api/proyectos/realizados/${slug}/`,
-      { method: "PATCH", body: adminInputToRealizado(data) },
+      { method: "PATCH", body: buildBody(adminInputToRealizado(data)) },
     );
     return realizadoToAdmin(p);
   }
   if (data.status) {
     const p = await apiFetch<BackendEnProgreso>(
       `/api/proyectos/en-progreso/${slug}/`,
-      { method: "PATCH", body: adminInputToEnProgreso(data) },
+      { method: "PATCH", body: buildBody(adminInputToEnProgreso(data)) },
     );
     return enProgresoToAdmin(p);
   }
@@ -268,19 +321,18 @@ export async function updateProject(
   if (current.kind === "realizado") {
     const p = await apiFetch<BackendRealizado>(
       `/api/proyectos/realizados/${slug}/`,
-      { method: "PATCH", body: adminInputToRealizado(data) },
+      { method: "PATCH", body: buildBody(adminInputToRealizado(data)) },
     );
     return realizadoToAdmin(p);
   }
   const p = await apiFetch<BackendEnProgreso>(
     `/api/proyectos/en-progreso/${slug}/`,
-    { method: "PATCH", body: adminInputToEnProgreso(data) },
+    { method: "PATCH", body: buildBody(adminInputToEnProgreso(data)) },
   );
   return enProgresoToAdmin(p);
 }
 
 export async function deleteProject(slug: string): Promise<void> {
-  // Tratar de borrar en ambos endpoints; uno de los dos responderá 404.
   try {
     await apiFetch(`/api/proyectos/en-progreso/${slug}/`, { method: "DELETE" });
     return;
@@ -291,41 +343,63 @@ export async function deleteProject(slug: string): Promise<void> {
 }
 
 export async function uploadProjectImage(
+  kind: AdminProjectKind,
   slug: string,
   file: File,
-  meta: { alt?: string; sort_order?: number; is_cover?: boolean } = {},
+  meta: { alt?: string; sort_order?: number } = {},
 ): Promise<AdminProjectImage> {
-  // Subir a la galería del proyecto en progreso (más común). Para realizados
-  // usa imagenes-antes-despues vía endpoints específicos del backend nuevo.
   const fd = new FormData();
   fd.append("image", file);
   if (meta.alt) fd.append("title", meta.alt);
   if (meta.sort_order !== undefined)
     fd.append("order", String(meta.sort_order));
-  return apiFetch<AdminProjectImage>(
-    `/api/proyectos/en-progreso/${slug}/galeria/`,
+  const g = await apiFetch<BackendGaleria>(
+    `/api/proyectos/${kindPath(kind)}/${slug}/galeria/`,
     { method: "POST", body: fd },
   );
+  return toAdminImage(g, null);
 }
 
 export async function deleteProjectImage(
+  kind: AdminProjectKind,
   slug: string,
   imageId: number,
 ): Promise<void> {
-  await apiFetch(`/api/proyectos/en-progreso/${slug}/galeria/${imageId}/`, {
-    method: "DELETE",
-  });
+  await apiFetch(
+    `/api/proyectos/${kindPath(kind)}/${slug}/galeria/${imageId}/`,
+    { method: "DELETE" },
+  );
 }
 
+/**
+ * "Marcar portada": el backend no tiene un flag is_cover en galería; la
+ * portada es el campo `cover_image` del proyecto. Descargamos la imagen de
+ * galería y la subimos como cover_image del proyecto vía PATCH multipart.
+ */
 export async function setProjectCover(
-  _slug: string,
-  _imageId: number,
-): Promise<AdminProjectImage> {
-  // El backend nuevo NO tiene un endpoint específico para marcar cover; el
-  // cover_image se administra como campo del proyecto. Esta función queda
-  // como no-op pero retorna una respuesta consistente.
-  throw new Error(
-    "Marcar imagen como portada no está implementado en el backend nuevo. " +
-      "Edita el campo cover_image del proyecto directamente.",
+  kind: AdminProjectKind,
+  slug: string,
+  imageUrl: string,
+): Promise<AdminProject> {
+  const res = await fetch(imageUrl);
+  if (!res.ok) throw new Error("No se pudo leer la imagen de galería.");
+  const blob = await res.blob();
+  const name = imageUrl.split("/").pop() || "portada.jpg";
+  const file = new File([blob], name, {
+    type: blob.type || "image/jpeg",
+  });
+  const fd = new FormData();
+  fd.append("cover_image", file);
+  if (kind === "realizado") {
+    const p = await apiFetch<BackendRealizado>(
+      `/api/proyectos/realizados/${slug}/`,
+      { method: "PATCH", body: fd },
+    );
+    return realizadoToAdmin(p);
+  }
+  const p = await apiFetch<BackendEnProgreso>(
+    `/api/proyectos/en-progreso/${slug}/`,
+    { method: "PATCH", body: fd },
   );
+  return enProgresoToAdmin(p);
 }

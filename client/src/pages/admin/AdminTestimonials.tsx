@@ -121,6 +121,7 @@ export default function AdminTestimonials() {
           {testimonials.map((t) => (
             <article
               key={t.id}
+              className="admin-testimonial-card"
               style={{
                 background: "#fff",
                 border: "1px solid var(--line)",
@@ -232,6 +233,7 @@ export default function AdminTestimonials() {
               </div>
 
               <div
+                className="admin-testimonial-actions"
                 style={{
                   display: "flex",
                   flexDirection: "column",

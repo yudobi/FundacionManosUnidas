@@ -12,7 +12,6 @@ export default defineConfig({
       "/api": {
         target: "http://127.0.0.1:8000",
         changeOrigin: false,
-        // cookie de refresh tiene path /api/auth/ — el proxy debe preservar el path tal cual
       },
       "/media": {
         target: "http://127.0.0.1:8000",

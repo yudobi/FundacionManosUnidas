@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import BrandMark from "./BrandMark";
@@ -14,6 +15,7 @@ const NAV_KEYS = [
 export default function SiteHeader() {
   const { t, i18n } = useTranslation();
   const current = (i18n.resolvedLanguage ?? i18n.language ?? "es").slice(0, 2);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   function changeLang(lng: "es" | "en") {
     void i18n.changeLanguage(lng);
@@ -56,7 +58,7 @@ export default function SiteHeader() {
         {t("header.skipToContent")}
       </a>
       <div className="container bar">
-        <Link to="/" className="brand">
+        <Link to="/" className="brand" onClick={() => setMobileOpen(false)}>
           <BrandMark useLogo size={40} />
           <div className="brand-text">
             <strong>Fundación Manos Unidas</strong>
@@ -111,7 +113,76 @@ export default function SiteHeader() {
             {t("header.donateNow")}
           </Link>
         </div>
+
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-label={mobileOpen ? t("header.closeMenu") : t("header.openMenu")}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMobileOpen((v) => !v)}
+        >
+          <span className="nav-toggle-bars" data-open={mobileOpen} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
       </div>
+
+      <nav
+        id="mobile-nav"
+        className="mobile-nav"
+        data-open={mobileOpen}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="container mobile-nav-inner">
+          {NAV_KEYS.map((item) => (
+            <Link
+              key={item.hash}
+              to={`/${item.hash}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {t(item.key)}
+            </Link>
+          ))}
+          <div className="mobile-nav-divider" />
+          <div
+            className="lang-toggle mobile-nav-lang"
+            role="group"
+            aria-label={t("header.langGroup")}
+          >
+            <button
+              type="button"
+              className={current === "es" ? "active" : ""}
+              onClick={() => changeLang("es")}
+            >
+              ES
+            </button>
+            <button
+              type="button"
+              className={current === "en" ? "active" : ""}
+              onClick={() => changeLang("en")}
+            >
+              EN
+            </button>
+          </div>
+          <Link
+            to="/admin/login"
+            className="mobile-nav-signin"
+            onClick={() => setMobileOpen(false)}
+          >
+            {t("header.signIn")}
+          </Link>
+          <Link
+            to="/#donar"
+            className="btn btn-red mobile-nav-donate"
+            onClick={() => setMobileOpen(false)}
+          >
+            {t("header.donateNow")}
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

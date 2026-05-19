@@ -43,6 +43,10 @@ const EMPTY_FORM: AdminProjectInput = {
   status_label: "",
   photo_label: "",
   sort_order: 0,
+  start_date: "",
+  end_date: "",
+  necesidades: "",
+  cover_image: null,
 };
 
 function fieldGroup(children: React.ReactNode) {
@@ -70,11 +74,13 @@ export default function AdminProjectEdit() {
     isNew ? undefined : slugParam,
   );
 
+  const kind = project?.kind ?? "en-progreso";
+  const projSlug = project?.slug ?? slugParam ?? "";
   const create = useCreateProject();
   const update = useUpdateProject(slugParam ?? "");
-  const upload = useUploadProjectImage(project?.slug ?? slugParam ?? "");
-  const delImage = useDeleteProjectImage(project?.slug ?? slugParam ?? "");
-  const setCover = useSetProjectCover(project?.slug ?? slugParam ?? "");
+  const upload = useUploadProjectImage(kind, projSlug);
+  const delImage = useDeleteProjectImage(kind, projSlug);
+  const setCover = useSetProjectCover(kind, projSlug);
 
   const [form, setForm] = useState<AdminProjectInput>(EMPTY_FORM);
   const [savedMsg, setSavedMsg] = useState<string | null>(null);
@@ -249,15 +255,17 @@ export default function AdminProjectEdit() {
               <label>Título</label>
               <input
                 type="text"
+                required={isNew}
                 value={form.title}
                 onChange={(e) => setField("title", e.target.value)}
                 placeholder="Techo digno para la familia Hernández"
               />
             </div>
             <div className="field">
-              <label>Resumen</label>
+              <label>Resumen / descripción</label>
               <textarea
                 rows={3}
+                required={isNew}
                 value={form.summary}
                 onChange={(e) => setField("summary", e.target.value)}
                 placeholder="Una línea o dos describiendo el proyecto…"
@@ -268,6 +276,7 @@ export default function AdminProjectEdit() {
                 <label>Ubicación</label>
                 <input
                   type="text"
+                  required={isNew}
                   value={form.location}
                   onChange={(e) => setField("location", e.target.value)}
                   placeholder="San Andrés Cholula"
@@ -353,6 +362,78 @@ export default function AdminProjectEdit() {
                   setField("sort_order", Number(e.target.value) || 0)
                 }
               />
+            </div>
+          </>,
+        )}
+
+        {fieldGroup(
+          <>
+            <div className="divider-mono">
+              Portada y fechas (requerido por el servidor)
+            </div>
+            <div className="field-row">
+              <div className="field">
+                <label>Fecha de inicio</label>
+                <input
+                  type="date"
+                  required={isNew}
+                  value={form.start_date ?? ""}
+                  onChange={(e) => setField("start_date", e.target.value)}
+                />
+              </div>
+              <div className="field">
+                <label>
+                  {form.status === "realizado"
+                    ? "Fecha de finalización"
+                    : "Fecha estimada de fin (opcional)"}
+                </label>
+                <input
+                  type="date"
+                  required={isNew && form.status === "realizado"}
+                  value={form.end_date ?? ""}
+                  onChange={(e) => setField("end_date", e.target.value)}
+                />
+              </div>
+            </div>
+            {form.status !== "realizado" && (
+              <div className="field">
+                <label>Necesidades del proyecto</label>
+                <textarea
+                  rows={3}
+                  required={isNew}
+                  value={form.necesidades ?? ""}
+                  onChange={(e) => setField("necesidades", e.target.value)}
+                  placeholder="Materiales, fondos, voluntarios necesarios…"
+                />
+              </div>
+            )}
+            <div className="field">
+              <label>
+                Imagen de portada{" "}
+                {isNew ? "(obligatoria)" : "(dejar vacío para conservar)"}
+              </label>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                required={isNew}
+                onChange={(e) =>
+                  setField("cover_image", e.target.files?.[0] ?? null)
+                }
+              />
+              {!isNew && project?.cover_image && (
+                <img
+                  src={project.cover_image}
+                  alt="Portada actual"
+                  style={{
+                    marginTop: 10,
+                    width: 200,
+                    aspectRatio: "4 / 3",
+                    objectFit: "cover",
+                    borderRadius: 8,
+                    border: "1px solid var(--line)",
+                  }}
+                />
+              )}
             </div>
           </>,
         )}
@@ -530,7 +611,7 @@ export default function AdminProjectEdit() {
                         type="button"
                         className="btn btn-ghost"
                         style={{ fontSize: 11, padding: "4px 10px" }}
-                        onClick={() => setCover.mutate(img.id)}
+                        onClick={() => setCover.mutate(img.image)}
                         disabled={setCover.isPending}
                       >
                         Marcar portada

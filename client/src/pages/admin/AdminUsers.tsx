@@ -99,8 +99,8 @@ export default function AdminUsers() {
           onChange={(e) => setQ(e.target.value)}
           placeholder="Buscar email o nombre…"
           style={{
-            flex: 1,
-            minWidth: 240,
+            flex: "1 1 200px",
+            minWidth: 0,
             background: "#fff",
             border: "1px solid var(--line)",
             borderRadius: 8,
@@ -144,10 +144,17 @@ export default function AdminUsers() {
             background: "#fff",
             border: "1px solid var(--line)",
             borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
           }}
         >
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table
+            style={{
+              width: "100%",
+              minWidth: 640,
+              borderCollapse: "collapse",
+            }}
+          >
             <thead>
               <tr style={{ background: "var(--bg-soft)" }}>
                 {["Usuario", "Rol", "Estado", "Registro", "Acciones"].map((h) => (

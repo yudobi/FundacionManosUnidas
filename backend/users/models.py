@@ -68,8 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField(null=True, blank=True)
     
     avatar = models.ImageField(
-        upload_to='avatars/%Y/%m/', 
-        default='avatars/default.png',
+        upload_to='avatars/%Y/%m/',
         blank=True,
         null=True
     )

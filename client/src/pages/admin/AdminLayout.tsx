@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import BrandMark from "../../components/BrandMark";
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
 export default function AdminLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   async function handleLogout() {
     await logout();
@@ -20,27 +22,38 @@ export default function AdminLayout() {
   }
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "260px 1fr",
-        minHeight: "100vh",
-        background: "var(--bg)",
-      }}
-    >
-      <aside
-        style={{
-          background: "#fff",
-          borderRight: "1px solid var(--line)",
-          padding: "28px 20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 28,
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-        }}
-      >
+    <div className="admin-shell">
+      <header className="admin-topbar">
+        <div className="brand">
+          <BrandMark useLogo size={32} />
+          <div className="brand-text">
+            <strong>Manos Unidas</strong>
+            <small>PANEL ADMIN</small>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="admin-menu-btn"
+          aria-label={sidebarOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={sidebarOpen}
+          onClick={() => setSidebarOpen((v) => !v)}
+        >
+          <span className="nav-toggle-bars" data-open={sidebarOpen} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+      </header>
+
+      <div
+        className="admin-backdrop"
+        data-open={sidebarOpen}
+        onClick={() => setSidebarOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside className="admin-sidebar" data-open={sidebarOpen}>
         <div className="brand">
           <BrandMark useLogo size={40} />
           <div className="brand-text">
@@ -61,6 +74,7 @@ export default function AdminLayout() {
               key={item.to}
               to={item.to}
               end={item.end}
+              onClick={() => setSidebarOpen(false)}
               style={({ isActive }) => ({
                 padding: "10px 14px",
                 borderRadius: 8,
@@ -125,13 +139,7 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      <section
-        style={{
-          padding: "40px 48px",
-          minHeight: "100vh",
-          overflow: "auto",
-        }}
-      >
+      <section className="admin-main">
         <Outlet />
       </section>
     </div>

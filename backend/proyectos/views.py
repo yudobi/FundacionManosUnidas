@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, status, filters
 from rest_framework.decorators import action
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiResponse
@@ -64,6 +65,7 @@ class CategoriaProyectoViewSet(viewsets.ModelViewSet):
 )
 class ProyectoRealizadoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     lookup_field = 'slug'
     lookup_value_regex = r'[-\w]+'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -105,16 +107,45 @@ class ProyectoRealizadoViewSet(viewsets.ModelViewSet):
 class ImagenAntesDespuesViewSet(viewsets.ModelViewSet):
     serializer_class = ImagenAntesDespuesSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
     def get_queryset(self):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        if proyecto_id:
-            return ImagenAntesDespues.objects.filter(proyecto_id=proyecto_id)
+        proyecto_slug = self.kwargs.get('proyecto_slug')
+        if proyecto_slug:
+            return ImagenAntesDespues.objects.filter(
+                proyecto__slug=proyecto_slug
+            )
         return ImagenAntesDespues.objects.none()
-    
+
     def perform_create(self, serializer):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        proyecto = get_object_or_404(ProyectoRealizado, id=proyecto_id)
+        proyecto = get_object_or_404(
+            ProyectoRealizado, slug=self.kwargs.get('proyecto_slug')
+        )
+        serializer.save(proyecto=proyecto)
+
+
+@extend_schema_view(
+    list=extend_schema(tags=["Proyectos - Galería Realizados"]),
+    create=extend_schema(tags=["Proyectos - Galería Realizados"]),
+    destroy=extend_schema(tags=["Proyectos - Galería Realizados"]),
+)
+class GaleriaProyectoRealizadoViewSet(viewsets.ModelViewSet):
+    serializer_class = GaleriaProyectoRealizadoSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def get_queryset(self):
+        proyecto_slug = self.kwargs.get('proyecto_slug')
+        if proyecto_slug:
+            return GaleriaProyectoRealizado.objects.filter(
+                proyecto__slug=proyecto_slug
+            )
+        return GaleriaProyectoRealizado.objects.none()
+
+    def perform_create(self, serializer):
+        proyecto = get_object_or_404(
+            ProyectoRealizado, slug=self.kwargs.get('proyecto_slug')
+        )
         serializer.save(proyecto=proyecto)
 
 
@@ -147,6 +178,7 @@ class ImagenAntesDespuesViewSet(viewsets.ModelViewSet):
 )
 class ProyectoEnProgresoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     lookup_field = 'slug'
     lookup_value_regex = r'[-\w]+'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -237,16 +269,19 @@ class ProyectoEnProgresoViewSet(viewsets.ModelViewSet):
 class NecesidadEspecificaViewSet(viewsets.ModelViewSet):
     serializer_class = NecesidadEspecificaSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+
     def get_queryset(self):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        if proyecto_id:
-            return NecesidadEspecifica.objects.filter(proyecto_id=proyecto_id)
+        proyecto_slug = self.kwargs.get('proyecto_slug')
+        if proyecto_slug:
+            return NecesidadEspecifica.objects.filter(
+                proyecto__slug=proyecto_slug
+            )
         return NecesidadEspecifica.objects.none()
-    
+
     def perform_create(self, serializer):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        proyecto = get_object_or_404(ProyectoEnProgreso, id=proyecto_id)
+        proyecto = get_object_or_404(
+            ProyectoEnProgreso, slug=self.kwargs.get('proyecto_slug')
+        )
         serializer.save(proyecto=proyecto)
     
     @action(detail=True, methods=['post'], url_path='cover')
@@ -284,14 +319,43 @@ class NecesidadEspecificaViewSet(viewsets.ModelViewSet):
 class ActualizacionProyectoViewSet(viewsets.ModelViewSet):
     serializer_class = ActualizacionProyectoSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
     def get_queryset(self):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        if proyecto_id:
-            return ActualizacionProyecto.objects.filter(proyecto_id=proyecto_id)
+        proyecto_slug = self.kwargs.get('proyecto_slug')
+        if proyecto_slug:
+            return ActualizacionProyecto.objects.filter(
+                proyecto__slug=proyecto_slug
+            )
         return ActualizacionProyecto.objects.none()
-    
+
     def perform_create(self, serializer):
-        proyecto_id = self.kwargs.get('proyecto_pk')
-        proyecto = get_object_or_404(ProyectoEnProgreso, id=proyecto_id)
+        proyecto = get_object_or_404(
+            ProyectoEnProgreso, slug=self.kwargs.get('proyecto_slug')
+        )
         serializer.save(proyecto=proyecto, created_by=self.request.user)
+
+
+@extend_schema_view(
+    list=extend_schema(tags=["Proyectos - Galería En Progreso"]),
+    create=extend_schema(tags=["Proyectos - Galería En Progreso"]),
+    destroy=extend_schema(tags=["Proyectos - Galería En Progreso"]),
+)
+class GaleriaProyectoProgresoViewSet(viewsets.ModelViewSet):
+    serializer_class = GaleriaProyectoProgresoSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def get_queryset(self):
+        proyecto_slug = self.kwargs.get('proyecto_slug')
+        if proyecto_slug:
+            return GaleriaProyectoProgreso.objects.filter(
+                proyecto__slug=proyecto_slug
+            )
+        return GaleriaProyectoProgreso.objects.none()
+
+    def perform_create(self, serializer):
+        proyecto = get_object_or_404(
+            ProyectoEnProgreso, slug=self.kwargs.get('proyecto_slug')
+        )
+        serializer.save(proyecto=proyecto)

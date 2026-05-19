@@ -97,10 +97,17 @@ export default function AdminProjects() {
             background: "#fff",
             border: "1px solid var(--line)",
             borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
           }}
         >
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table
+            style={{
+              width: "100%",
+              minWidth: 640,
+              borderCollapse: "collapse",
+            }}
+          >
             <thead>
               <tr style={{ background: "var(--bg-soft)" }}>
                 {[

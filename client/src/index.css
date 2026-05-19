@@ -341,6 +341,109 @@
   color: var(--bg);
 }
 
+/* ---------- mobile nav toggle (hamburguesa) ---------- */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.nav-toggle-bars {
+  position: relative;
+  width: 20px;
+  height: 14px;
+}
+.nav-toggle-bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 200ms ease, opacity 160ms ease, top 200ms ease;
+}
+.nav-toggle-bars span:nth-child(1) {
+  top: 0;
+}
+.nav-toggle-bars span:nth-child(2) {
+  top: 6px;
+}
+.nav-toggle-bars span:nth-child(3) {
+  top: 12px;
+}
+.nav-toggle-bars[data-open="true"] span:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+.nav-toggle-bars[data-open="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle-bars[data-open="true"] span:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+/* ---------- mobile nav panel ---------- */
+.mobile-nav {
+  display: none;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 260ms ease;
+}
+.mobile-nav[data-open="true"] {
+  max-height: 80vh;
+}
+.mobile-nav-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 12px;
+  padding-bottom: 20px;
+}
+.mobile-nav-inner a {
+  padding: 13px 12px;
+  font-size: 16px;
+  color: var(--ink-soft);
+  border-radius: 10px;
+  text-decoration: none;
+}
+.mobile-nav-inner a:hover {
+  background: var(--bg-soft);
+  color: var(--ink);
+}
+.mobile-nav-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 8px 0;
+}
+.mobile-nav-lang {
+  align-self: flex-start;
+  font-size: 13px;
+}
+.mobile-nav-lang button {
+  padding: 7px 13px;
+}
+.mobile-nav-signin {
+  padding: 13px 12px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.mobile-nav-donate {
+  margin-top: 6px;
+  justify-content: center;
+}
+
 /* ---------- hero ---------- */
 .hero {
   padding: 64px 0 96px;
@@ -1262,6 +1365,10 @@
   font-size: 14px;
   color: #fff;
   letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+.bank-card .bank-cell {
+  min-width: 0;
 }
 
 /* ---------- register ---------- */
@@ -1583,12 +1690,24 @@
   .bank-card {
     grid-template-columns: 1fr 1fr;
   }
+  .field-row,
+  .field-row.three,
   .donate-form .field-row,
-  .donate-form .field-row.three {
+  .donate-form .field-row.three,
+  .register-aside .role-list {
     grid-template-columns: 1fr;
   }
   .site-nav {
     display: none;
+  }
+  .header-actions {
+    display: none;
+  }
+  .nav-toggle {
+    display: inline-flex;
+  }
+  .mobile-nav {
+    display: block;
   }
   .section {
     padding: 80px 0;
@@ -1605,7 +1724,144 @@
     grid-template-columns: repeat(3, 1fr);
   }
   .footer-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  .site-header .bar {
+    height: 64px;
+    gap: 12px;
+  }
+  .brand-text strong {
+    font-size: 15px;
+  }
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+  .bank-card {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .hero-visual {
+    height: 360px;
+  }
+  .hero {
+    padding: 40px 0 64px;
+  }
+  .section {
+    padding: 56px 0;
+  }
+  #inicio,
+  #nosotros,
+  #proyectos,
+  #testimonios,
+  #donar,
+  #registro,
+  #contacto {
+    scroll-margin-top: 76px;
+  }
+}
+
+/* ==========================================================================
+   ADMIN · layout responsive (sidebar colapsable en móvil)
+   ========================================================================== */
+.admin-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: var(--bg);
+}
+.admin-sidebar {
+  background: #fff;
+  border-right: 1px solid var(--line);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.admin-main {
+  padding: 40px 48px;
+  min-height: 100vh;
+  overflow: auto;
+}
+.admin-topbar {
+  display: none;
+}
+.admin-backdrop {
+  display: none;
+}
+.admin-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+  .admin-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 70;
+    width: 264px;
+    max-width: 82vw;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
+    box-shadow: 0 24px 60px -28px rgba(10, 15, 31, 0.4);
+  }
+  .admin-sidebar[data-open="true"] {
+    transform: translateX(0);
+  }
+  .admin-backdrop[data-open="true"] {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(10, 15, 31, 0.42);
+  }
+  .admin-main {
+    padding: 20px 16px;
+  }
+  .admin-testimonial-card {
+    grid-template-columns: 1fr !important;
+  }
+  .admin-testimonial-actions {
+    min-width: 0 !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+  .admin-testimonial-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 }
 

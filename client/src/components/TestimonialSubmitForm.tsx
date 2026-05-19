@@ -232,8 +232,10 @@ export default function TestimonialSubmitForm() {
             }}
             role="alert"
           >
-            No pudimos enviar tu testimonio. Revisa los datos o intenta más
-            tarde.
+            No pudimos enviar tu testimonio.{" "}
+            {submit.error instanceof Error
+              ? submit.error.message
+              : "Revisa los datos o intenta más tarde."}
           </p>
         )}
 

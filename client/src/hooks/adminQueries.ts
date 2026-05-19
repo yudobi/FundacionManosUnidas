@@ -13,6 +13,7 @@ import {
   updateProject,
   uploadProjectImage,
   type AdminProjectInput,
+  type AdminProjectKind,
 } from "../api/admin/projects";
 import {
   approveTestimonial,
@@ -86,31 +87,36 @@ export function useDeleteProject() {
   });
 }
 
-export function useUploadProjectImage(slug: string) {
+export function useUploadProjectImage(
+  kind: AdminProjectKind,
+  slug: string,
+) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (params: {
-      file: File;
-      alt?: string;
-      sort_order?: number;
-      is_cover?: boolean;
-    }) => uploadProjectImage(slug, params.file, params),
+    mutationFn: (params: { file: File; alt?: string; sort_order?: number }) =>
+      uploadProjectImage(kind, slug, params.file, params),
     onSuccess: () => invalidateProjects(qc),
   });
 }
 
-export function useDeleteProjectImage(slug: string) {
+export function useDeleteProjectImage(
+  kind: AdminProjectKind,
+  slug: string,
+) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (imageId: number) => deleteProjectImage(slug, imageId),
+    mutationFn: (imageId: number) => deleteProjectImage(kind, slug, imageId),
     onSuccess: () => invalidateProjects(qc),
   });
 }
 
-export function useSetProjectCover(slug: string) {
+export function useSetProjectCover(
+  kind: AdminProjectKind,
+  slug: string,
+) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (imageId: number) => setProjectCover(slug, imageId),
+    mutationFn: (imageUrl: string) => setProjectCover(kind, slug, imageUrl),
     onSuccess: () => invalidateProjects(qc),
   });
 }

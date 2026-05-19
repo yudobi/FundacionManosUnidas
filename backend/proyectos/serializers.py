@@ -7,6 +7,17 @@ from .models import (
 )
 
 
+def abs_media_url(serializer, file_field):
+    """Devuelve la URL absoluta de un FileField/ImageField si existe."""
+    if not file_field:
+        return None
+    url = file_field.url
+    request = serializer.context.get('request')
+    if request is not None:
+        return request.build_absolute_uri(url)
+    return url
+
+
 class CategoriaProyectoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoriaProyecto
@@ -22,16 +33,13 @@ class ImagenAntesDespuesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImagenAntesDespues
         fields = '__all__'
+        read_only_fields = ['proyecto']
     
     def get_image_before_url(self, obj):
-        if obj.image_before:
-            return obj.image_before.url
-        return None
-    
+        return abs_media_url(self, obj.image_before)
+
     def get_image_after_url(self, obj):
-        if obj.image_after:
-            return obj.image_after.url
-        return None
+        return abs_media_url(self, obj.image_after)
 
 
 class GaleriaProyectoRealizadoSerializer(serializers.ModelSerializer):
@@ -40,11 +48,10 @@ class GaleriaProyectoRealizadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = GaleriaProyectoRealizado
         fields = '__all__'
+        read_only_fields = ['proyecto']
     
     def get_image_url(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+        return abs_media_url(self, obj.image)
 
 
 class ProyectoRealizadoListSerializer(serializers.ModelSerializer):
@@ -63,9 +70,7 @@ class ProyectoRealizadoListSerializer(serializers.ModelSerializer):
         ]
     
     def get_cover_image_url(self, obj):
-        if obj.cover_image:
-            return obj.cover_image.url
-        return None
+        return abs_media_url(self, obj.cover_image)
     
     def get_description_short(self, obj):
         """Retorna una versión corta de la descripción"""
@@ -86,9 +91,7 @@ class ProyectoRealizadoSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_cover_image_url(self, obj):
-        if obj.cover_image:
-            return obj.cover_image.url
-        return None
+        return abs_media_url(self, obj.cover_image)
 
 
 # ==================== PROYECTOS EN PROGRESO ====================
@@ -100,6 +103,7 @@ class NecesidadEspecificaSerializer(serializers.ModelSerializer):
     class Meta:
         model = NecesidadEspecifica
         fields = '__all__'
+        read_only_fields = ['proyecto']
     
     def get_porcentaje_cubierto(self, obj):
         if obj.cantidad_necesaria > 0:
@@ -113,11 +117,10 @@ class GaleriaProyectoProgresoSerializer(serializers.ModelSerializer):
     class Meta:
         model = GaleriaProyectoProgreso
         fields = '__all__'
+        read_only_fields = ['proyecto']
     
     def get_image_url(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+        return abs_media_url(self, obj.image)
 
 
 class ActualizacionProyectoSerializer(serializers.ModelSerializer):
@@ -127,11 +130,10 @@ class ActualizacionProyectoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActualizacionProyecto
         fields = '__all__'
+        read_only_fields = ['proyecto', 'created_by']
     
     def get_image_url(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+        return abs_media_url(self, obj.image)
 
 
 class ProyectoEnProgresoListSerializer(serializers.ModelSerializer):
@@ -152,9 +154,7 @@ class ProyectoEnProgresoListSerializer(serializers.ModelSerializer):
         ]
     
     def get_cover_image_url(self, obj):
-        if obj.cover_image:
-            return obj.cover_image.url
-        return None
+        return abs_media_url(self, obj.cover_image)
     
     def get_porcentaje_recaudado(self, obj):
         return obj.porcentaje_recaudado
@@ -182,9 +182,7 @@ class ProyectoEnProgresoSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_cover_image_url(self, obj):
-        if obj.cover_image:
-            return obj.cover_image.url
-        return None
+        return abs_media_url(self, obj.cover_image)
     
     def get_porcentaje_recaudado(self, obj):
         return obj.porcentaje_recaudado

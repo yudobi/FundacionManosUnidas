@@ -3,6 +3,17 @@ from rest_framework import serializers
 from .models import Testimonio, TestimonioReporte, TestimonioComentario
 
 
+def abs_media_url(serializer, file_field):
+    """Devuelve la URL absoluta de un FileField/ImageField si existe."""
+    if not file_field:
+        return None
+    url = file_field.url
+    request = serializer.context.get('request')
+    if request is not None:
+        return request.build_absolute_uri(url)
+    return url
+
+
 class TestimonioListSerializer(serializers.ModelSerializer):
     """Serializer para listado de testimonios (campos básicos)"""
     author_type_display = serializers.ReadOnlyField(source='get_author_type_display')
@@ -20,9 +31,7 @@ class TestimonioListSerializer(serializers.ModelSerializer):
         ]
     
     def get_author_photo_url(self, obj):
-        if obj.author_photo and hasattr(obj.author_photo, 'url'):
-            return obj.author_photo.url
-        return None
+        return abs_media_url(self, obj.author_photo)
     
     def get_content_preview(self, obj):
         return obj.content[:150] + '...' if len(obj.content) > 150 else obj.content
@@ -41,27 +50,22 @@ class TestimonioDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_author_photo_url(self, obj):
-        if obj.author_photo and hasattr(obj.author_photo, 'url'):
-            return obj.author_photo.url
-        return None
+        return abs_media_url(self, obj.author_photo)
 
 
 class TestimonioCreateSerializer(serializers.ModelSerializer):
     """Serializer para creación de testimonios (público)"""
-    
+
+    author_email = serializers.EmailField(required=False, allow_blank=True)
+
     class Meta:
         model = Testimonio
         fields = [
-            'author_name', 'author_email', 'author_type', 'title',
-            'content', 'author_photo', 'video_url', 'rating', 'proyecto_nombre'
+            'id', 'author_name', 'author_email', 'author_type', 'title',
+            'content', 'author_photo', 'video_url', 'rating',
+            'proyecto_nombre', 'status'
         ]
-    
-    def validate_author_email(self, value):
-        """Validar formato de email"""
-        from django.core.validators import EmailValidator
-        validator = EmailValidator()
-        validator(value)
-        return value
+        read_only_fields = ['id', 'status']
     
     def create(self, validated_data):
         # Los testimonios creados por usuarios públicos quedan pendientes
