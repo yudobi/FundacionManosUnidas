@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-w0+o!^mqvp=!+re++z5xfh6fj=8&x9d5keuf!3a=0f$g$@=omt')
+SECRET_KEY = config('SECRET_KEY', default='')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
@@ -69,13 +69,26 @@ MIDDLEWARE = [
 
 
 # CORS Configuration
+# CORS Configuration
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite dev server
-    "http://localhost:3000",  # Alternativa
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://144.217.83.209",
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True  # Temporal para desarrollo
 CORS_ALLOW_CREDENTIALS = True
 
+# CSRF Configuration
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://144.217.83.209",
+]
 
 # REST Framework Configuration
 REST_FRAMEWORK = {
@@ -137,11 +150,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='db_manos_unidas'),
-        'USER': config('DB_USER', default='postgres'),
-        'PASSWORD': config('DB_PASSWORD', default='96081520908'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5433'),
+        'NAME': config('DB_NAME', default=''),
+        'USER': config('DB_USER', default=''),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DB_HOST', default=''),
+        'PORT': config('DB_PORT', default=''),
     }
 }
 
